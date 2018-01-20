@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,6 +15,7 @@ import com.pardha.sample.modal.Emp;
 @Repository
 public class DaoImpl implements Dao {
 
+	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -24,29 +26,37 @@ public class DaoImpl implements Dao {
 	@Override
 	public List<Emp> getEmployees() {
 		
-		return jdbcTemplate.query("select * from employee",new RowMapper<Emp>(){  
-	        public Emp mapRow(ResultSet rs, int row) throws SQLException {  
-	            Emp e=new Emp();  
-	            e.setName(rs.getString(0));
-	            e.setEmail(rs.getString(1));  
-	            return e;  
-	        }  
-	    });  
+		return jdbcTemplate.query("select * from employee",new BeanPropertyRowMapper<Emp>(Emp.class));
 	}
 
 	@Override
-	public int save(){  
-	    String sql="insert into EMPLOYEE(name,email)values('aASFASFa','saSDASAFaaaa@a.com')";  
-	    return jdbcTemplate.update(sql);  
+	public int save(Emp emp){  
+	    String sql="insert into EMPLOYEE(name,email)values(?,?)";  
+	    return jdbcTemplate.update(sql,new Object[]{emp.getName(),emp.getEmail()});  
 	}
 
-	/*@Override
-	public String getEmail(String name) {
-		
-		String sql="select name,email from team_members where name=?";
 
-		return jdbcTemplate.queryForObject(sql, new Object[]{name},new BeanPropertyRowMapper<Emp>(Emp.class));
-	}*/
+	@Override
+	public int update(Emp emp) {
+		String sql="update EMPLOYEE set email='"+emp.getEmail()+"' where name='"+emp.getName()+"'";
+		return jdbcTemplate.update(sql);
+	}
+
+
+	@Override
+	public int delete(String name) {
+		String sql="delete from EMPLOYEE where name=?";
+		return jdbcTemplate.update(sql,new Object[]{name});
+	}
+
+
+	@Override
+	public Emp getEmpDetails(String name) {
+		String sql="select * from EMPLOYEE where name=?";
+		return jdbcTemplate.queryForObject(sql,new Object[]{name},new BeanPropertyRowMapper<Emp>(Emp.class));
+	}
+
+	
 	
 
 }

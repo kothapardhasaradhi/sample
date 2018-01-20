@@ -3,16 +3,16 @@
   
 <h1>Employees List</h1>  
 <table border="2" width="70%" cellpadding="2">  
-<tr><th>Id</th><th>Name</th><th>Salary</th><th>Designation</th><th>Edit</th><th>Delete</th></tr>  
+<tr><th>Name</th><th>Email-Id</th>
    <c:forEach var="emp" items="${list}">   
    <tr>  
-   <td>${emp.id}</td>  
+   
    <td>${emp.name}</td>  
-   <td>${emp.salary}</td>  
-   <td>${emp.designation}</td>  
-   <td><a href="editemp/${emp.id}">Edit</a></td>  
-   <td><a href="deleteemp/${emp.id}">Delete</a></td>  
-   </tr>  
+   <td>${emp.email}</td>
+   <td><a href="edit/${emp.name}">edit</a></td>
+   <td><a href="delete/${emp.name}">Delete</a></td>
+   <tr>
+     
    </c:forEach>  
    </table>  
    <br/>  
