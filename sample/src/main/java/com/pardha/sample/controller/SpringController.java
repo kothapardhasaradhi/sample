@@ -30,7 +30,7 @@ public class SpringController {
 	}
 	@RequestMapping("/save")
 	public ModelAndView save(@ModelAttribute Emp emp){
-		int i = dao.save(emp);
+		 dao.save(emp);
 		return new ModelAndView("redirect:/home");
 	}
 	
@@ -60,7 +60,7 @@ public class SpringController {
 	@RequestMapping(value="/edit/save")
 	public ModelAndView update(@ModelAttribute Emp emp){
 		
-		int i= dao.update(emp);
+		dao.update(emp);
 		return new ModelAndView("redirect:/home");	
 	}
 	

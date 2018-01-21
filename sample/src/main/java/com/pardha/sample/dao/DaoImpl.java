@@ -1,59 +1,85 @@
 package com.pardha.sample.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pardha.sample.modal.Emp;
 
-@Repository
+@Repository("dao")
+@Transactional
 public class DaoImpl implements Dao {
 
-	@Autowired
+	/*@Autowired
 	JdbcTemplate jdbcTemplate;
 	
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
+*/
+	
+	private SessionFactory sessionFactory;
+	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Emp> getEmployees() {
 		
-		return jdbcTemplate.query("select * from employee",new BeanPropertyRowMapper<Emp>(Emp.class));
+		Session session = sessionFactory.getCurrentSession();
+		return session.createQuery("from employee").list();		
+		
+		//return jdbcTemplate.query("select * from employee",new BeanPropertyRowMapper<Emp>(Emp.class));
+		
 	}
 
 	@Override
-	public int save(Emp emp){  
-	    String sql="insert into EMPLOYEE(name,email)values(?,?)";  
-	    return jdbcTemplate.update(sql,new Object[]{emp.getName(),emp.getEmail()});  
+	public void save(Emp emp){  
+		
+		Session session = sessionFactory.getCurrentSession();
+		session.persist(emp);
+		
+//	    String sql="insert into EMPLOYEE(name,email)values(?,?)";  
+//	    return jdbcTemplate.update(sql,new Object[]{emp.getName(),emp.getEmail()});  
 	}
 
 
 	@Override
-	public int update(Emp emp) {
-		String sql="update EMPLOYEE set email='"+emp.getEmail()+"' where name='"+emp.getName()+"'";
-		return jdbcTemplate.update(sql);
+	public void update(Emp emp) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		session.update(emp);
+//		String sql="update EMPLOYEE set email='"+emp.getEmail()+"' where name='"+emp.getName()+"'";
+//		return jdbcTemplate.update(sql);
 	}
 
 
 	@Override
-	public int delete(String name) {
-		String sql="delete from EMPLOYEE where name=?";
-		return jdbcTemplate.update(sql,new Object[]{name});
+	public void delete(String name) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		Emp emp = (Emp)session.load(Emp.class,new String(name));
+		session.delete(emp);
+		
+//		String sql="delete from EMPLOYEE where name=?";
+//		return jdbcTemplate.update(sql,new Object[]{name});
 	}
 
 
 	@Override
 	public Emp getEmpDetails(String name) {
-		String sql="select * from EMPLOYEE where name=?";
-		return jdbcTemplate.queryForObject(sql,new Object[]{name},new BeanPropertyRowMapper<Emp>(Emp.class));
+		
+		Session session = sessionFactory.getCurrentSession();
+		return session.load(Emp.class,new String(name));
+//		String sql="select * from EMPLOYEE where name=?";
+//		return jdbcTemplate.queryForObject(sql,new Object[]{name},new BeanPropertyRowMapper<Emp>(Emp.class));
 	}
 
 	

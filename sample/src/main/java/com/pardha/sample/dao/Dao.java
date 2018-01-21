@@ -7,9 +7,9 @@ import com.pardha.sample.modal.Emp;
 public interface Dao {
 	
 	public List<Emp> getEmployees();
-	public int save(Emp emp);
-	public int update(Emp emp);
-	public int delete(String name);
+	public void save(Emp emp);
+	public void update(Emp emp);
+	public void delete(String name);
 	public Emp getEmpDetails(String name);
 	
 }
