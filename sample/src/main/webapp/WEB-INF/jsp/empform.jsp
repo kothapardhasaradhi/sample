@@ -6,7 +6,10 @@
         <table >    
          <tr>    
           <td>Name : </td>   
-          <td><form:input path="name"  /></td>  
+          <td><form:input path="name"  />
+          
+          <form:hidden path="id"  />
+          </td>  
          </tr>    
          <tr>    
           <td>email:</td>    

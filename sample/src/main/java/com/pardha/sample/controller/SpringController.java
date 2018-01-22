@@ -46,9 +46,10 @@ public class SpringController {
 		
 	}
 	
-	@RequestMapping("/edit/{name}")
-	public ModelAndView edit(@PathVariable String name){
-		Emp emp = dao.getEmpDetails(name);
+	@RequestMapping("/edit/{id}")
+	public ModelAndView edit(@PathVariable int id){
+		Emp emp = dao.getEmpDetails(id);
+		System.out.println("SpringController.edit()" +emp.getId());
 		ModelAndView model = new ModelAndView();
 		model.setViewName("empform");
 		model.addObject("message", "Edit your Details");
@@ -64,9 +65,9 @@ public class SpringController {
 		return new ModelAndView("redirect:/home");	
 	}
 	
-	@RequestMapping(value="/delete/{name}",method=RequestMethod.GET)
-	public ModelAndView delete(@PathVariable String	name){
-		dao.delete(name);
+	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
+	public ModelAndView delete(@PathVariable int	id){
+		dao.delete(id);
 		return new ModelAndView("redirect:/home");
 	}
 	

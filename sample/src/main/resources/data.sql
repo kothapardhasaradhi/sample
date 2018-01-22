@@ -2,7 +2,7 @@
 DROP TABLE EMPLOYEE;
 
 CREATE TABLE EMPLOYEE (
-    Id int,
+    Id int AUTO_INCREMENT,
     Name varchar(25),
     Email varchar(25)
    

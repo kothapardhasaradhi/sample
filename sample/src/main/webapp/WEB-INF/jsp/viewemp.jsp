@@ -6,11 +6,11 @@
 <tr><th>Name</th><th>Email-Id</th>
    <c:forEach var="emp" items="${list}">   
    <tr>  
-   
+   <td>${emp.id}</td>  
    <td>${emp.name}</td>  
    <td>${emp.email}</td>
-   <td><a href="edit/${emp.name}">edit</a></td>
-   <td><a href="delete/${emp.name}">Delete</a></td>
+   <td><a href="edit/${emp.id}">edit</a></td>
+   <td><a href="delete/${emp.id}">Delete</a></td>
    <tr>
      
    </c:forEach>  

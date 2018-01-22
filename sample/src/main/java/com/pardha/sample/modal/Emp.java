@@ -1,6 +1,8 @@
 package com.pardha.sample.modal;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -8,10 +10,10 @@ import javax.persistence.Table;
 @Table(name="EMPLOYEE")
 public class Emp {
 	
-	@Id
+	@Id@GeneratedValue(strategy =GenerationType.IDENTITY)
 	int id;
-	String name;
-	String email;
+	private String name;
+	private String email;
 	
 	public int getId() {
 		return id;
@@ -31,6 +33,7 @@ public class Emp {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-		
+	
+	
 
 }
