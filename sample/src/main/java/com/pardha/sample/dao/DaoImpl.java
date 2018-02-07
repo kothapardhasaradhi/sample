@@ -39,16 +39,14 @@ public class DaoImpl implements Dao {
 		Session session = sessionFactory.getCurrentSession();
 		session.persist(emp);
 
-		// String sql="insert into EMPLOYEE(name,email)values(?,?)";
-		// return jdbcTemplate.update(sql,new
-		// Object[]{emp.getName(),emp.getEmail()});
+		//String sql="insert into EMPLOYEE(name,email)values(?,?)";
+		//return jdbcTemplate.update(sql,newObject[]{emp.getName(),emp.getEmail()});
 	}
 
 	@Override
 	public void update(Emp emp) {
 
 		Session session = sessionFactory.getCurrentSession();
-		System.out.println(emp.getId()+"ssssssssssssssssssssssssss");
 		session.update(emp);
 		// String sql="update EMPLOYEE set email='"+emp.getEmail()+"' where
 		// name='"+emp.getName()+"'";
